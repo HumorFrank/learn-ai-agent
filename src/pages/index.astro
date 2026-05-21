@@ -1,0 +1,167 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogCard from '../components/BlogCard.astro';
+
+const posts = await getCollection('blog', ({ data }) => {
+  return import.meta.env.PROD ? !data.draft : true;
+});
+posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout pageTitle="LearnSkill" description="个人博客，记录学习与思考。">
+  <section class="hero">
+    <p class="hero-greeting">Hi，我是</p>
+    <h1 class="hero-title">
+      <span class="gradient-text">Skill 小白</span>
+      <span class="hero-wave" aria-hidden="true">👋</span>
+    </h1>
+    <p class="hero-subtitle">
+      记录 Skill 学习过程中的每一个脚印。<br />
+      从零开始，持续精进。
+    </p>
+  </section>
+
+  <section class="posts-section">
+    <div class="section-head">
+      <h2 class="section-title">最新文章</h2>
+      <a href="/blog" class="section-link">查看全部 &rarr;</a>
+    </div>
+
+    {posts.length === 0 ? (
+      <div class="empty-state">
+        <p>还没有文章，敬请期待。</p>
+      </div>
+    ) : (
+      <div class="card-grid stagger">
+        {posts.map((post) => (
+          <BlogCard
+            title={post.data.title}
+            date={post.data.date}
+            slug={post.id}
+            description={post.data.description}
+          />
+        ))}
+      </div>
+    )}
+  </section>
+</BaseLayout>
+
+<style>
+  /* ── Hero ── */
+  .hero {
+    padding: 3rem 0 2.5rem;
+    animation: fadeInUp 0.7s var(--ease-out);
+  }
+
+  .hero-greeting {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--color-text-muted);
+    margin: 0 0 0.25rem;
+    font-style: italic;
+  }
+
+  .hero-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    letter-spacing: -0.03em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-glow) 50%, #d4784f 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: shimmer 4s ease-in-out infinite;
+  }
+
+  .hero-wave {
+    display: inline-block;
+    font-size: 2.5rem;
+    animation: wave 2s ease-in-out infinite;
+    transform-origin: 70% 70%;
+  }
+
+  @keyframes wave {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(14deg); }
+    50% { transform: rotate(-8deg); }
+    75% { transform: rotate(10deg); }
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin: 0;
+    max-width: 480px;
+  }
+
+  /* ── Posts Section ── */
+  .posts-section {
+    margin-top: 1.5rem;
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 550;
+    margin: 0;
+  }
+
+  .section-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    background: none;
+    transition: color 0.2s;
+  }
+
+  .section-link:hover {
+    color: var(--color-accent);
+  }
+
+  .card-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .empty-state {
+    padding: 3rem 0;
+    text-align: center;
+    color: var(--color-text-muted);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .hero {
+      padding: 1.5rem 0 2rem;
+    }
+
+    .hero-title {
+      font-size: 2.2rem;
+    }
+
+    .hero-wave {
+      font-size: 1.8rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+    }
+  }
+</style>

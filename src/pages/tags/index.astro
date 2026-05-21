@@ -1,0 +1,97 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = await getCollection('blog');
+const allTags = [...new Set(posts.flatMap((p) => p.data.tags))];
+---
+
+<BaseLayout pageTitle="标签" description="按标签浏览文章">
+  <header class="page-header animate-in">
+    <h1 class="page-title">标签</h1>
+    <p class="page-count">{allTags.length} 个标签</p>
+  </header>
+
+  {allTags.length === 0 ? (
+    <div class="empty-state">
+      <p>还没有标签。</p>
+    </div>
+  ) : (
+    <div class="tag-cloud stagger">
+      {allTags.map((tag) => (
+        <a href={`/tags/${tag}`} class="tag-card">
+          <span class="tag-name">#{tag}</span>
+          <span class="tag-count">
+            {posts.filter((p) => p.data.tags.includes(tag)).length} 篇
+          </span>
+        </a>
+      ))}
+    </div>
+  )}
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .page-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem;
+  }
+
+  .page-count {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .tag-card {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background-image: none;
+    transition: all 0.25s var(--ease-out);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .tag-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--color-accent);
+  }
+
+  .tag-name {
+    font-weight: 550;
+    color: var(--color-accent);
+    font-size: 0.95rem;
+  }
+
+  .tag-count {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    background: var(--color-bg-alt);
+    padding: 0.1rem 0.5rem;
+    border-radius: 10px;
+  }
+
+  .empty-state {
+    padding: 4rem 0;
+    text-align: center;
+    color: var(--color-text-muted);
+  }
+</style>

@@ -1,0 +1,157 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+export interface Props {
+  title: string;
+  date: Date;
+  tags?: string[];
+}
+
+const { title, date, tags } = Astro.props;
+---
+
+<BaseLayout pageTitle={title}>
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">{title}</h1>
+      <div class="post-meta">
+        <time datetime={date.toISOString()}>
+          {date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </time>
+        {tags && tags.length > 0 && (
+          <div class="post-tags">
+            {tags.map((tag) => (
+              <a href={`/tags/${tag}`} class="tag-pill">#{tag}</a>
+            ))}
+          </div>
+        )}
+      </div>
+    </header>
+
+    <div class="post-body">
+      <slot />
+    </div>
+
+    <footer class="post-footer">
+      <hr />
+      <nav class="post-nav">
+        <a href="/blog" class="back-link">&larr; 返回文章列表</a>
+      </nav>
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .post {
+    animation: fadeIn 0.5s var(--ease-out);
+  }
+
+  .post-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .post-title {
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    margin: 0 0 0.75rem;
+    line-height: 1.2;
+  }
+
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    color: var(--color-text-muted);
+  }
+
+  .post-meta time {
+    font-size: 0.95rem;
+  }
+
+  .post-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tag-pill {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    background-image: none;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .tag-pill:hover {
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  /* ── Post Content ── */
+  .post-body {
+    font-size: 1.0625rem;
+    line-height: 1.9;
+  }
+
+  .post-body :global(h2) {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 550;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .post-body :global(h3) {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 550;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .post-body :global(p) {
+    margin: 0 0 1.25rem;
+  }
+
+  .post-body :global(ul),
+  .post-body :global(ol) {
+    padding-left: 1.25rem;
+    margin: 0 0 1.25rem;
+  }
+
+  .post-body :global(li) {
+    margin-bottom: 0.4rem;
+  }
+
+  .post-body :global(a) {
+    color: var(--color-accent);
+    background: linear-gradient(to right, var(--color-accent), var(--color-accent-glow));
+    background-size: 0% 1.5px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 0.3s var(--ease-out);
+    padding-bottom: 1px;
+  }
+
+  .post-body :global(a:hover) {
+    background-size: 100% 1.5px;
+  }
+
+  .post-footer {
+    margin-top: 3rem;
+  }
+
+  .back-link {
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+</style>

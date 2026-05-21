@@ -1,0 +1,80 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
+  return tags.map((tag) => ({ params: { tag } }));
+}
+
+const { tag } = Astro.params;
+const posts = await getCollection('blog', ({ data }) =>
+  data.tags.includes(tag!)
+);
+posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout pageTitle={`标签: ${tag}`} description={`标签 #${tag} 下的文章`}>
+  <header class="page-header animate-in">
+    <p class="breadcrumb">
+      <a href="/tags">标签</a> &rsaquo;
+    </p>
+    <h1 class="page-title">#{tag}</h1>
+    <p class="page-count">{posts.length} 篇文章</p>
+  </header>
+
+  <div class="card-grid stagger">
+    {posts.map((post) => (
+      <BlogCard
+        title={post.data.title}
+        date={post.data.date}
+        slug={post.id}
+        description={post.data.description}
+      />
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .breadcrumb {
+    margin: 0 0 0.5rem;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+
+  .breadcrumb a {
+    color: var(--color-text-muted);
+    background: none;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--color-accent);
+  }
+
+  .page-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem;
+    color: var(--color-accent);
+  }
+
+  .page-count {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .card-grid {
+    display: grid;
+    gap: 1rem;
+  }
+</style>
