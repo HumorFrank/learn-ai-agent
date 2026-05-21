@@ -1,6 +1,6 @@
-# LearnSkill
+# Learn-AI-Agent
 
-个人技术博客，记录 Skill 学习过程中的思考与实践。
+个人技术博客，记录 AI Agent 学习过程中的思考与实践。
 
 基于 [Astro](https://astro.build) 构建，采用静态生成，追求极致的加载速度和纯净的阅读体验。
 
