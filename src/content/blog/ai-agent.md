@@ -29,7 +29,17 @@ tags: ['AI', 'Claude Code', 'DeepSeek', 'Agent']
 > MCP 的设计哲学是"上下文共享"。它不仅仅是一个 RPC（远程过程调用）协议，更重要的是它允许智能体和工具之间共享丰富的上下文信息。
 
 2️⃣ MCP 设计思想
-<img src="https://raw.githubusercontent.com/datawhalechina/Hello-Agents/main/docs/images/10-figures/10-1.png" width="100%">
+<img src="https://raw.githubusercontent.com/datawhalechina/Hello-Agents/main/docs/images/10-figures/10-1.png" width="100%" alt="MCP 设计思想">
+
+3️⃣ MCP 协议提供了三大核心能力，构成完整的工具访问框架
+
+| 能力            | 说明             | 使用场景            | 示例                             |
+| --------------- | ---------------- | ------------------- | -------------------------------- |
+| Tools(工具)     | 可执行的功能     | 执行操作/处理数据   | read_file/search_code/send_email |
+| Resources(资源) | 可访问的数据     | 读取数据/订阅变化   | 文件内容/数据库记录/API响应      |
+| Prompts(提示词) | 预定义的提示版本 | 标准化任务/最佳实践 | 代码审查提示/文档生成提示        |
+
+> Tools 是主动的（执行操作），Resources 是被动的（提供数据），Prompts 是指导性的（提供模板）。
 
 ### A2A — 智能体间的对话
 
@@ -41,7 +51,7 @@ tags: ['AI', 'Claude Code', 'DeepSeek', 'Agent']
 
 2️⃣ A2A 设计思想
 
-<img src="https://raw.githubusercontent.com/datawhalechina/Hello-Agents/main/docs/images/10-figures/10-2.png" width="100%">
+<img src="https://raw.githubusercontent.com/datawhalechina/Hello-Agents/main/docs/images/10-figures/10-2.png" width="100%" alt="A2A 设计思想">
 
 ### ANP - 智能体网络的基础设施
 
@@ -54,7 +64,16 @@ tags: ['AI', 'Claude Code', 'DeepSeek', 'Agent']
 
 2️⃣ ANP 设计思想
 
-<img src="https://raw.githubusercontent.com/datawhalechina/Hello-Agents/main/docs/images/10-figures/10-3.png" width="100%">
+<img src="https://raw.githubusercontent.com/datawhalechina/Hello-Agents/main/docs/images/10-figures/10-3.png" width="100%" alt="ANP 设计思想">
+
+### 三种协议对比
+
+<img src="https://raw.githubusercontent.com/datawhalechina/Hello-Agents/main/docs/images/10-figures/10-table-1.png" width="100%" alt="MCP/A2A/ANP 协议对比">
+
+> 如何选择合适的协议？
+> - 若你的智能体需要访问外部服务（文件、数据库、API）—— 选择 MCP
+> - 若你需要多个智能体相互协作完成任务 —— 选择 A2A
+> - 若你要构建大规模的智能体生态系统 —— 考虑 ANP
 
 ## Skills
 
@@ -199,4 +218,3 @@ code ./.claude/settings.json # 打开 claude 配置文件进行配置
 ### Claude Code 切换到终端模式
 - [Claude Code 在 VS Code 中切换到终端模式](https://code.claude.com/docs/zh-CN/vs-code#切换到终端模式)
 - [VS Code 命令和快捷键](https://code.claude.com/docs/zh-CN/vs-code#vs-code-命令和快捷键)
-
