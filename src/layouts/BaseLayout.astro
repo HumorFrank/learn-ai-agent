@@ -16,7 +16,7 @@ const currentPath = Astro.url.pathname;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description || pageTitle} />
-  <title>{pageTitle} — LearnSkill</title>
+  <title>{pageTitle} — Learn AI Agent</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 </head>
 <body>
@@ -25,8 +25,8 @@ const currentPath = Astro.url.pathname;
   <header class="nav-bar">
     <div class="nav-inner">
       <a href="/" class="logo">
-        <span class="logo-mark">LS</span>
-        <span class="logo-text">LearnSkill</span>
+        <span class="logo-mark">LAI</span>
+        <span class="logo-text">Learn AI Agent</span>
       </a>
       <nav>
         <a href="/" class:list={["nav-link", { active: currentPath === '/' }]}>首页</a>
@@ -44,11 +44,11 @@ const currentPath = Astro.url.pathname;
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <span class="logo-mark small">LS</span>
-        <span>LearnSkill</span>
+        <span class="logo-mark small">LAI</span>
+        <span>Learn AI Agent</span>
       </div>
       <p class="footer-tagline">记录学习，分享成长。</p>
-      <p class="footer-copy">&copy; {new Date().getFullYear()} LearnSkill &mdash; Built with <a href="https://astro.build">Astro</a></p>
+      <p class="footer-copy">&copy; {new Date().getFullYear()} Learn AI Agent &mdash; Built with <a href="https://astro.build">Astro</a></p>
     </div>
   </footer>
 </body>
