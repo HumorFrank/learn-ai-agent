@@ -17,7 +17,7 @@
 ## 目录结构
 
 ```
-LearnSkill/
+learn-ai-agent/
 ├── public/
 │   ├── favicon.svg
 │   └── robots.txt
