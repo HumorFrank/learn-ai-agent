@@ -242,16 +242,21 @@ time {
   h2 { font-size: 1.4rem; }
 }
 
-/* ── Tables ── Astro 的 Markdown 渲染通常会输出 <table>，但如果没有 CSS，表格可能“看不见” */
+/* Astro 的 Markdown 渲染通常会输出 <table>，但如果没有 CSS，表格可能“看不见” */
+/* Markdown 表格美化与移动端适配 */
 table {
   border-collapse: collapse;
   width: 100%;
   margin: 1em 0;
+  max-width: 100vw;
+  overflow-x: auto;
+  display: block;
 }
 th, td {
   border: 1px solid #ccc;
   padding: 8px 12px;
   text-align: left;
+  word-break: break-all;
 }
 th {
   background: #f7f7f7;

@@ -39,7 +39,11 @@ tags: ['AI', 'Claude Code', 'DeepSeek', 'Agent']
 | Resources(资源) | 可访问的数据     | 读取数据/订阅变化   | 文件内容/数据库记录/API响应      |
 | Prompts(提示词) | 预定义的提示版本 | 标准化任务/最佳实践 | 代码审查提示/文档生成提示        |
 
-> Tools 是主动的（执行操作），Resources 是被动的（提供数据），Prompts 是指导性的（提供模板）。
+4️⃣ 三种能力的区别
+
+> - Tools 是主动的（执行操作）
+> - Resources 是被动的（提供数据）
+> - Prompts 是指导性的（提供模板）。
 
 ### A2A — 智能体间的对话
 
