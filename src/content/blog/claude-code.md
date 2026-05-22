@@ -16,6 +16,7 @@ tags: ['AI', 'Claude Code', 'Claude Code 参考资料']
 
 ## Claude Code 参考资料
 
+- [Claude Code 教程](https://www.runoob.com/claude-code/claude-code-tutorial.html)
 - [安装 Claude Code](https://code.claude.com/docs/zh-CN/quickstart)
 - [Claude Code DeepSeek 配置](https://www.runoob.com/claude-code/claude-code-deepseek.html)
 - [DeepSeek API 文档](https://api-docs.deepseek.com/zh-cn/guides/anthropic_api)

@@ -19,7 +19,6 @@ tags: ['AI', 'Claude Code', 'DeepSeek', 'Agent']
 - [AI Agent 教程](https://www.runoob.com/ai-agent/ai-agent-intro.html)
 - [《从零开始构建智能体》](https://github.com/datawhalechina/hello-agents)
 - [AI Agent全栈课程](https://github.com/Callous-0923/agent-study)
-- [Claude Code 教程](https://www.runoob.com/claude-code/claude-code-tutorial.html)
 
 ## 通信协议
 
@@ -80,7 +79,4 @@ tags: ['AI', 'Claude Code', 'DeepSeek', 'Agent']
 > - 若你需要多个智能体相互协作完成任务 —— 选择 A2A
 > - 若你要构建大规模的智能体生态系统 —— 考虑 ANP
 
-### AI 可视化管理
-
-- [CC Switch统一管理你的 AI 编程工具工作流](https://ccswitch.io/zh/)
-
+## Prompt（提示词）
