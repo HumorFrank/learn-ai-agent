@@ -97,5 +97,3 @@ Describe the scenarios where this skill should be used.
 | Anthropic 官方工程文章            | [Anthropic 官方工程文章](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) |
 | Anthropic 官方 Skills GitHub 仓库 | [Anthropic 官方 Skills GitHub 仓库](https://github.com/anthropics/skills)                                             |
 | Claude 技能精选列表               | [Claude 技能精选列表](https://github.com/ComposioHQ/awesome-claude-skills)                                            |
-|                                   |                                                                                                                       |
-|                                   |                                                                                                                       |
