@@ -8,6 +8,7 @@ export interface Props {
 }
 
 const { title, date, tags } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout pageTitle={title}>
@@ -21,7 +22,7 @@ const { title, date, tags } = Astro.props;
         {tags && tags.length > 0 && (
           <div class="post-tags">
             {tags.map((tag) => (
-              <a href={`/tags/${tag}`} class="tag-pill">#{tag}</a>
+              <a href={`${base}/tags/${tag}`} class="tag-pill">#{tag}</a>
             ))}
           </div>
         )}
@@ -35,7 +36,7 @@ const { title, date, tags } = Astro.props;
     <footer class="post-footer">
       <hr />
       <nav class="post-nav">
-        <a href="/blog" class="back-link">&larr; 返回文章列表</a>
+        <a href={`${base}/blog`} class="back-link">&larr; 返回文章列表</a>
       </nav>
     </footer>
   </article>

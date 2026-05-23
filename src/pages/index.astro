@@ -7,6 +7,7 @@ const posts = await getCollection('blog', ({ data }) => {
   return import.meta.env.PROD ? !data.draft : true;
 });
 posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <BaseLayout pageTitle="Learn AI Agent" description="个人博客，记录学习与思考。">
@@ -24,7 +25,7 @@ posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
   <section class="posts-section">
     <div class="section-head">
       <h2 class="section-title">最新文章</h2>
-      <a href="/blog" class="section-link">查看全部 &rarr;</a>
+      <a href={`${base}/blog`} class="section-link">查看全部 &rarr;</a>
     </div>
 
     {posts.length === 0 ? (
