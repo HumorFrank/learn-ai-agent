@@ -8,33 +8,74 @@ const posts = await getCollection('blog', ({ data }) => {
 });
 posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const latestPost = posts[0];
+const restPosts = posts.slice(1);
 ---
 
-<BaseLayout pageTitle="Learn AI Agent" description="个人博客，记录学习与思考。">
+<BaseLayout pageTitle="Learn AI Agent" description="个人博客，记录 AI Agent 学习与思考。">
+  <!-- Hero -->
   <section class="hero">
-    <p class="hero-greeting">Hi，我是</p>
+    <div class="hero-badge">AI Agent</div>
     <h1 class="hero-title">
-      <span class="gradient-text">AI Agent</span>
+      探索 <span class="gradient-text">AI Agent</span><br />
+      的无限可能
     </h1>
     <p class="hero-subtitle">
-      记录 AI Agent 学习过程中的每一个脚印。<br />
-      从零开始，持续精进。
+      从零开始，记录 AI Agent 学习过程中的每一个脚印。<br />
+      持续精进，分享成长。
     </p>
+    <div class="hero-actions">
+      <a href={`${base}/blog`} class="btn-primary">阅读文章</a>
+      <a href={`${base}/about`} class="btn-ghost">了解更多</a>
+    </div>
+    <!-- Decorative grid -->
+    <div class="hero-grid" aria-hidden="true"></div>
   </section>
 
+  <!-- Featured post -->
+  {latestPost && (
+    <section class="featured animate-in">
+      <div class="section-label">
+        <span class="label-dot"></span>
+        最新文章
+      </div>
+      <a href={`${base}/blog/${latestPost.id}`} class="featured-card">
+        <div class="featured-content">
+          <div class="featured-tags">
+            {latestPost.data.tags.map((tag) => (
+              <span class="tag-sm">#{tag}</span>
+            ))}
+          </div>
+          <h2 class="featured-title">{latestPost.data.title}</h2>
+          {latestPost.data.description && (
+            <p class="featured-desc">{latestPost.data.description}</p>
+          )}
+          <time datetime={latestPost.data.date.toISOString()}>
+            {latestPost.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </time>
+        </div>
+        <div class="featured-arrow">&rarr;</div>
+      </a>
+    </section>
+  )}
+
+  <!-- All posts -->
   <section class="posts-section">
     <div class="section-head">
-      <h2 class="section-title">最新文章</h2>
+      <div class="section-label">
+        <span class="label-dot"></span>
+        全部文章
+      </div>
       <a href={`${base}/blog`} class="section-link">查看全部 &rarr;</a>
     </div>
 
-    {posts.length === 0 ? (
+    {restPosts.length === 0 ? (
       <div class="empty-state">
-        <p>还没有文章，敬请期待。</p>
+        <p>更多文章正在路上...</p>
       </div>
     ) : (
       <div class="card-grid stagger">
-        {posts.map((post) => (
+        {restPosts.map((post) => (
           <BlogCard
             title={post.data.title}
             date={post.data.date}
@@ -50,81 +91,226 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <style>
   /* ── Hero ── */
   .hero {
-    padding: 3rem 0 2.5rem;
-    animation: fadeInUp 0.7s var(--ease-out);
+    position: relative;
+    padding: 6rem 0 4rem;
+    overflow: hidden;
   }
 
-  .hero-greeting {
+  .hero-badge {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    border: 1px solid var(--color-border-accent);
+    border-radius: 100px;
     font-family: var(--font-display);
-    font-size: 1.2rem;
-    color: var(--color-text-muted);
-    margin: 0 0 0.25rem;
-    font-style: italic;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.5s var(--ease-out) both;
   }
 
   .hero-title {
-    font-size: 3.2rem;
+    font-size: 3.5rem;
     font-weight: 700;
-    margin: 0 0 1rem;
-    letter-spacing: -0.03em;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+    margin: 0 0 1.25rem;
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+    animation: fadeInUp 0.6s var(--ease-out) 0.1s both;
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-glow) 50%, #d4784f 100%);
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-glow) 40%, var(--color-accent-secondary) 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-size: 200% 200%;
-    animation: shimmer 4s ease-in-out infinite;
-  }
-
-  .hero-wave {
-    display: inline-block;
-    font-size: 2.5rem;
-    animation: wave 2s ease-in-out infinite;
-    transform-origin: 70% 70%;
-  }
-
-  @keyframes wave {
-    0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(14deg); }
-    50% { transform: rotate(-8deg); }
-    75% { transform: rotate(10deg); }
+    animation: gradientShift 6s ease-in-out infinite;
   }
 
   .hero-subtitle {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     color: var(--color-text-muted);
-    line-height: 1.7;
-    margin: 0;
+    line-height: 1.8;
+    margin: 0 0 2rem;
     max-width: 480px;
+    animation: fadeInUp 0.6s var(--ease-out) 0.2s both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 0.75rem;
+    animation: fadeInUp 0.6s var(--ease-out) 0.3s both;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.65rem 1.5rem;
+    background: var(--color-accent);
+    color: var(--color-btn-on-accent);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.25s var(--ease-smooth);
+    box-shadow: 0 0 20px var(--glow-btn);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-accent-glow);
+    box-shadow: 0 0 30px var(--glow-btn-hover);
+    transform: translateY(-1px);
+    color: var(--color-btn-on-accent);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.65rem 1.5rem;
+    background: transparent;
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.25s var(--ease-smooth);
+  }
+
+  .btn-ghost:hover {
+    color: var(--color-text);
+    border-color: var(--color-text-muted);
+    background: var(--color-surface);
+  }
+
+  .hero-grid {
+    position: absolute;
+    top: 0;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background-image:
+      linear-gradient(var(--color-border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.4;
+    mask-image: radial-gradient(circle at center, black 20%, transparent 70%);
+    -webkit-mask-image: radial-gradient(circle at center, black 20%, transparent 70%);
+  }
+
+  /* ── Section Label ── */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.25rem;
+  }
+
+  .label-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    box-shadow: 0 0 8px var(--glow-dot);
+  }
+
+  /* ── Featured ── */
+  .featured {
+    margin-bottom: 3rem;
+  }
+
+  .featured-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 2.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: all 0.3s var(--ease-smooth);
+    gap: 1.5rem;
+  }
+
+  .featured-card:hover {
+    border-color: var(--color-border-accent);
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
+    background: var(--color-surface-hover);
+  }
+
+  .featured-content {
+    flex: 1;
+  }
+
+  .featured-tags {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .tag-sm {
+    padding: 0.15rem 0.55rem;
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    font-family: var(--font-display);
+  }
+
+  .featured-title {
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem;
+    transition: color 0.2s;
+  }
+
+  .featured-card:hover .featured-title {
+    color: var(--color-accent);
+  }
+
+  .featured-desc {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    margin: 0 0 0.75rem;
+    line-height: 1.6;
+  }
+
+  .featured-arrow {
+    font-size: 1.5rem;
+    color: var(--color-text-dim);
+    transition: all 0.3s var(--ease-smooth);
+    flex-shrink: 0;
+  }
+
+  .featured-card:hover .featured-arrow {
+    color: var(--color-accent);
+    transform: translateX(4px);
   }
 
   /* ── Posts Section ── */
   .posts-section {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
   }
 
   .section-head {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
     margin-bottom: 1.5rem;
   }
 
-  .section-title {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 550;
-    margin: 0;
-  }
-
   .section-link {
-    font-size: 0.9rem;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
     font-weight: 500;
     color: var(--color-text-muted);
     background: none;
@@ -147,21 +333,27 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   }
 
   /* ── Responsive ── */
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
     .hero {
-      padding: 1.5rem 0 2rem;
+      padding: 4rem 0 3rem;
     }
 
     .hero-title {
-      font-size: 2.2rem;
+      font-size: 2.4rem;
     }
 
-    .hero-wave {
-      font-size: 1.8rem;
+    .hero-grid {
+      display: none;
     }
 
-    .hero-subtitle {
-      font-size: 1rem;
+    .featured-card {
+      padding: 1.5rem;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .featured-arrow {
+      align-self: flex-end;
     }
   }
 </style>
