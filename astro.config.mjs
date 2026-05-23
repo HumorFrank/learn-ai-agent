@@ -1,9 +1,9 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-export default defineConfig({
+export default ({ command }) => defineConfig({
   site: 'https://humorfrank.github.io',
-  base: '/learn-ai-agent/',
+  base: command === 'build' ? '/learn-ai-agent/' : '/',
   integrations: [sitemap()],
   markdown: {
     shikiConfig: {
