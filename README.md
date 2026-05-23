@@ -94,12 +94,23 @@ draft: false   # true 时仅开发环境可见
 
 ## 部署
 
-项目输出纯静态文件（`dist/`），可部署到任意静态托管平台：
+项目输出纯静态文件（`dist/`），已配置 GitHub Actions 自动部署到 GitHub Pages。
 
-```bash
-pnpm build
-# 将 dist/ 目录部署到目标平台
-```
+- **部署分支**：`main`（仅 main 分支推送时触发）
+- **包管理**：pnpm（通过 Corepack 管理）
+- **部署地址**：https://humorfrank.github.io/learn-ai-agent/
+
+### base 路径说明
+
+项目配置了 `base: '/learn-ai-agent/'`（仅在构建时生效）：
+
+- **开发环境**（`pnpm dev`）：base 为 `/`，直接访问 `localhost:4321/`
+- **生产构建**（`pnpm build`）：base 为 `/learn-ai-agent/`，所有链接自动带正确前缀
+
+### GitHub Pages 设置
+
+1. 进入仓库 **Settings > Pages > Source**，选择 **GitHub Actions**
+2. 推送代码到 `main` 分支即可自动触发部署
 
 ## License
 
