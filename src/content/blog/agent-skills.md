@@ -28,6 +28,101 @@ Agent Skills 的关键是渐进式披露，分三层加载
 - **层级 3：加载资源文件**
   > 只在需要时读取额外文件（如脚本、示例），或通过工具执行脚本。
 
+## Skills 的两种类型
+
+1️⃣ 全局 Skills（个人）
+
+- 存放位置：`~/.claude/skills/`
+- 作用范围：所有项目
+- 适用场景：个人通用技能
+
+2️⃣ 项目 Skills（团队）
+
+- 存放位置：`项目目录/.claude/skills/`
+- 作用范围：当前项目
+- 适用场景：团队共享、项目特定规范
+
+## Skills vs 提示词
+
+| 提示词                     | Skills                 |
+| -------------------------- | ---------------------- |
+| 临时性的，每次都要重复说   | 持久化的，写一次反复用 |
+| 存在对话历史中，占用 Token | 按需加载，节省 Token   |
+| 无法在会话间共享           | 可以在团队中共享       |
+| 难以版本控制               | 可以用 Git 管理        |
+
+## Skills vs MCP
+- `MCP` 是给这个工作人员配备的"工具"（扳手、电脑、访问权限）
+- `Skills` 是给这个工作人员的"操作手册"（怎么做代码审查、怎么提交代码）
+
+| 维度     | Skills                   | MCP              |
+| -------- | ------------------------ | ---------------- |
+| 本质     | 知识和流程               | 工具和接口       |
+| 提供什么 | 告诉 AI "怎么做"         | 给 AI "能用什么" |
+| 存储位置 | `skills/` 目录           | MCP 服务器       |
+| 配置方式 | Markdown 文件            | JSON 配置文件    |
+| 触发方式 | `/skill-name` 或自动识别 | 通过配置自动加载 |
+
+## Skills 如何工作
+
+当 Claude Code 启动时，它会
+
+- 扫描 `Skills` 目录
+- 解析每个 `SKILL.md` 文件
+- 提取 `YAML` frontmatter 元数据
+- 将技能内容加入"知识库"
+- 根据 `description` 自动匹配触发
+
+## SKILL.md 文件结构
+
+### 基本结构
+
+```md
+.claude/skills/custom-skill/ 
+├── SKILL.md # 必需：技能定义文件
+├── scripts/ # 可选：辅助脚本
+├── templates/ # 可选：输出模板
+├── references/ # 可选：参考文档
+└── examples/ # 可选：示例文件
+```
+
+### SKILL.md 模板
+
+SKILL.md 文件分为两个部分
+
+1️⃣ 第一部分：YAML Frontmatter（元数据）
+
+```md
+---
+name: skill-name # 技能名称，会变成 /skill-name 命令
+description: 简短描述 # 用于 Claude 自动匹配触发
+category: development # 分类
+tags: # 标签
+  - code
+  - automation
+---
+```
+
+2️⃣ 第二部分：Markdown 内容（指令）
+
+```md
+# 技能标题
+
+## 使用场景
+
+什么时候用这个技能
+
+## 执行步骤
+
+1. 第一步
+2. 第二步
+
+## 注意事项
+
+- 注意点 1
+- 注意点 2
+```
+
 ## Skill 执行流程
 
 - 从用户指令开始，先进行 `Skill` 意图识别，决定是否进入受控执行路径。
@@ -36,6 +131,27 @@ Agent Skills 的关键是渐进式披露，分三层加载
 - 最终结果经过约束整合后输出，用户的下一次输入触发新一轮完整流程。
 
 <img src="https://www.runoob.com/wp-content/uploads/2026/01/claude-agent-skills-runoob.png" width="100%" alt="Skill 执行流程">
+
+## 创建自己的 Skills
+
+1️⃣ **创建 Skills 有两种方法**
+
+- 一种是直接让 `Claude` 帮你创建
+- 另一种使用专门的 `skill-creator` 工具
+
+2️⃣ **直接让 Claude 帮你创建**
+
+- 创建目录结构
+- 生成 `SKILL.md` 文件
+- 填写 `YAML` frontmatter
+- 编写技能内容
+
+3️⃣ **使用 skill-creator**
+> skill-creator 是一个专门用来创建 Skills 的工具，会引导你一步步完成。
+- 引导你明确技能用途
+- 生成 `SKILL.md` 草稿
+- 创建测试用例
+- 运行评估并优化
 
 ## 培养技能
 
