@@ -7,6 +7,46 @@ tags: ['AI', 'Claude Code', 'DeepSeek', 'Agent']
 
 # AI Agent
 
+## 本节导读
+
+<div class="sg-card">
+  <div class="sg-body">
+    <div class="sg-item">
+      <div class="sg-item-head">
+        <div class="sg-item-icon">🎯</div>
+        <div class="sg-item-label">学习目标</div>
+      </div>
+      <div class="sg-tags">
+        <span class="sg-tag">AI Agent 定义</span>
+        <span class="sg-tag">MCP 协议</span>
+        <span class="sg-tag">A2A 协议</span>
+        <span class="sg-tag">Prompt 工程</span>
+      </div>
+    </div>
+    <div class="sg-item">
+      <div class="sg-item-head">
+        <div class="sg-item-icon">⏱️</div>
+        <div class="sg-item-label">预计阅读</div>
+      </div>
+      <div class="sg-time">
+        <span class="sg-time-num">12</span>
+        <span class="sg-time-unit">min</span>
+      </div>
+    </div>
+    <div class="sg-item">
+      <div class="sg-item-head">
+        <div class="sg-item-icon">📦</div>
+        <div class="sg-item-label">你将收获</div>
+      </div>
+      <ul class="sg-list">
+        <li>理解 AI Agent 核心概念</li>
+        <li>区分 MCP / A2A / ANP 协议</li>
+        <li>编写高质量 Prompt</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 ## 定义
 > AI Agent (AI 智能体) 是一种通过使用可用工具设计`工作流`来自主执行任务的系统。
 

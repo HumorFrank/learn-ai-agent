@@ -378,6 +378,131 @@ th {
   transition: background-color 0.35s var(--ease-smooth);
 }
 
+/* ── Section Guide Card ── */
+.sg-card {
+  position: relative;
+  margin: 28px 0;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-bg-alt);
+  overflow: hidden;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.sg-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--color-accent), var(--color-accent-secondary));
+  z-index: 1;
+}
+
+.sg-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.sg-body {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.sg-item + .sg-item {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-border);
+  transition: border-color 0.35s ease;
+}
+
+.sg-item-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.sg-item-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+  flex-shrink: 0;
+  padding-bottom: 4px;
+}
+
+.sg-item-label {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.sg-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sg-tag {
+  display: inline-block;
+  padding: 3px 12px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  border-radius: 6px;
+  border: 1px solid var(--color-accent-border-subtle);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.sg-time {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.sg-time-num {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.sg-time-unit {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.sg-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sg-list li {
+  position: relative;
+  padding-left: 14px;
+  margin-bottom: 4px;
+  font-size: 0.88rem;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.sg-list li::before {
+  content: '›';
+  position: absolute;
+  left: -8px;
+  color: var(--color-accent);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
 /* ── Responsive ── */
 @media (max-width: 640px) {
   h1 { font-size: 2rem; }

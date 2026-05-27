@@ -6,6 +6,45 @@ tags: ['AI', 'CC Switch', '统一管理你的 AI 编程工具','AI ']
 ---
 
 # Tools
+
+## 本节导读
+
+<div class="sg-card">
+  <div class="sg-body">
+    <div class="sg-item">
+      <div class="sg-item-head">
+        <div class="sg-item-icon">🎯</div>
+        <div class="sg-item-label">学习目标</div>
+      </div>
+      <div class="sg-tags">
+        <span class="sg-tag">CC Switch</span>
+        <span class="sg-tag">工具管理</span>
+        <span class="sg-tag">MCP/Skills 同步</span>
+      </div>
+    </div>
+    <div class="sg-item">
+      <div class="sg-item-head">
+        <div class="sg-item-icon">⏱️</div>
+        <div class="sg-item-label">预计阅读</div>
+      </div>
+      <div class="sg-time">
+        <span class="sg-time-num">5</span>
+        <span class="sg-time-unit">min</span>
+      </div>
+    </div>
+    <div class="sg-item">
+      <div class="sg-item-head">
+        <div class="sg-item-icon">📦</div>
+        <div class="sg-item-label">你将收获</div>
+      </div>
+      <ul class="sg-list">
+        <li>了解 CC Switch 核心功能</li>
+        <li>统一管理 AI 编程工具</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 ## CC Switch
 - [CC Switch](https://www.ccswitch.io/zh/)
 > [下载地址](https://github.com/farion1231/cc-switch/releases): AI 编程工具统一管理平台

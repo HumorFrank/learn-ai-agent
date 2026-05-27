@@ -7,6 +7,46 @@ tags: ["Skill", "Skills 技能", "skill-creator"]
 
 # Agent Skills（智能体技能）
 
+## 本节导读
+
+<div class="sg-card">
+  <div class="sg-body">
+    <div class="sg-item">
+      <div class="sg-item-head">
+        <div class="sg-item-icon">🎯</div>
+        <div class="sg-item-label">学习目标</div>
+      </div>
+      <div class="sg-tags">
+        <span class="sg-tag">Skills 概念</span>
+        <span class="sg-tag">渐进式披露</span>
+        <span class="sg-tag">SKILL.md 结构</span>
+        <span class="sg-tag">Skills vs MCP</span>
+      </div>
+    </div>
+    <div class="sg-item">
+      <div class="sg-item-head">
+        <div class="sg-item-icon">⏱️</div>
+        <div class="sg-item-label">预计阅读</div>
+      </div>
+      <div class="sg-time">
+        <span class="sg-time-num">15</span>
+        <span class="sg-time-unit">min</span>
+      </div>
+    </div>
+    <div class="sg-item">
+      <div class="sg-item-head">
+        <div class="sg-item-icon">📦</div>
+        <div class="sg-item-label">你将收获</div>
+      </div>
+      <ul class="sg-list">
+        <li>理解 Skills 工作原理</li>
+        <li>掌握 SKILL.md 编写</li>
+        <li>创建自定义技能</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 1️⃣ 概念
 
 > Agent 是智能体，Skills 是技能的意思，Agent Skills（智能体技能）是将专业知识、工作流规范固化为可复用资产的核心工具。

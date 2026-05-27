@@ -5,6 +5,45 @@ description: 'Claude Code 是 Agent（智能体工具），不是 Chat（聊天�
 tags: ['AI', 'Claude Code', 'Claude Code 参考资料']
 ---
 
+## 本节导读
+
+<div class="sg-card">
+  <div class="sg-body">
+    <div class="sg-item">
+      <div class="sg-item-head">
+        <div class="sg-item-icon">🎯</div>
+        <div class="sg-item-label">学习目标</div>
+      </div>
+      <div class="sg-tags">
+        <span class="sg-tag">Claude Code 配置</span>
+        <span class="sg-tag">DeepSeek 接入</span>
+        <span class="sg-tag">三级配置体系</span>
+      </div>
+    </div>
+    <div class="sg-item">
+      <div class="sg-item-head">
+        <div class="sg-item-icon">⏱️</div>
+        <div class="sg-item-label">预计阅读</div>
+      </div>
+      <div class="sg-time">
+        <span class="sg-time-num">10</span>
+        <span class="sg-time-unit">min</span>
+      </div>
+    </div>
+    <div class="sg-item">
+      <div class="sg-item-head">
+        <div class="sg-item-icon">📦</div>
+        <div class="sg-item-label">你将收获</div>
+      </div>
+      <ul class="sg-list">
+        <li>配置 Claude Code</li>
+        <li>接入 DeepSeek API</li>
+        <li>理解三级配置体系</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 ## Claude Code 搭配
 
 - [Claude Code 开源地址](https://github.com/anthropics/claude-code)
