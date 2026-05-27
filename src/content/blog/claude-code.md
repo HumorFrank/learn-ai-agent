@@ -62,7 +62,13 @@ tags: ['AI', 'Claude Code', 'Claude Code 参考资料']
 > VSCode 勾选 Disable Login Prompt 配置来关闭登录页面
 - [DeepSeek 开发平台](https://platform.deepseek.com/sign_in)
 
-## 用户级配置
+## 通过 CC Switch 可视化配置
+- [Claude Desktop](https://ccswitch.io/zh/docs?section=providers&item=claude-desktop): Claude Desktop 面板用于在 CC Switch 中管理 Claude Desktop 的供应商配置
+- [快速上手](https://ccswitch.io/zh/docs?section=getting-started&item=quickstart): 帮助你在 5 分钟内完成首次配置。
+
+## 通过 Terminal 终端配置
+
+### 用户级配置
 
 1️⃣ 进入个人配置目录
 
@@ -93,7 +99,7 @@ C:\Users\你的用户名\.claude\settings.json
 }
 ```
 
-## vscode 级别配置
+### vscode 级别配置
 
 1️⃣ 进入配置（将环境变量配置到插件的 settings.json）
 
@@ -145,7 +151,7 @@ C:\Users\你的用户名\.claude\settings.json
 }
 ```
 
-## 项目级配置
+### 项目级配置
 
 1️⃣ 进入配置
 
