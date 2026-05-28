@@ -65,8 +65,8 @@ tags: ['AI', 'Claude Code', 'DeepSeek', 'Agent']
 ### MCP — 智能体与工具的桥梁
 
 1️⃣ 概念
-> MCP（Model Context Protocol）由 Anthropic 团队提出，其核心设计理念是`标准化智能体与外部工具/资源的通信方式`。
-> MCP 的设计哲学是"上下文共享"。它不仅仅是一个 RPC（远程过程调用）协议，更重要的是它允许智能体和工具之间共享丰富的上下文信息。
+> MCP（Model Context Protocol 模型上下文协议）由 Anthropic 团队提出，其核心设计理念是`标准化智能体与外部工具/资源的通信方式`
+> (MCP 是一套开放标准协议，它允许 AI 模型安全、可控地访问外部工具和数据源)
 
 2️⃣ MCP 设计思想
 <img src="https://raw.githubusercontent.com/datawhalechina/Hello-Agents/main/docs/images/10-figures/10-1.png" width="100%" alt="MCP 设计思想">
