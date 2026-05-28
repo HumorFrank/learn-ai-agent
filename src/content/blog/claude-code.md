@@ -250,30 +250,278 @@ Claude 会执行以下步骤
 工作原理
 > Claude Code 会自动记录你之前的对话会话。当你使用 `/resume`时，它会切换回上一段会话的上下文，保留之前的所有讨论内容和状态。
 
-## Claude Code 搭配
 
-- [Claude Code 开源地址](https://github.com/anthropics/claude-code)
-- [Claude Code 官方文档](https://code.claude.com/docs/zh-CN/overview)
-- [DeepSeek Anthropic API](https://api-docs.deepseek.com/zh-cn/guides/anthropic_api)
-- [智谱大模型接入 Claude Code](ttps://docs.bigmodel.cn/cn/coding-plan/tool/claude#claude-code)
+## 核心配置说明
+> 合理的配置能让 Claude Code 更好地适应你的项目和团队。本节介绍配置文件的作用、优先级以及如何针对不同的使用场景进行优化。
 
-## Claude Code 参考资料
+### 配置文件位置与优先级
+> Claude Code 采用分层配置策略，不同级别的配置有不同的作用范围和优先级。
 
-- [Claude Code 教程](https://www.runoob.com/claude-code/claude-code-tutorial.html)
-- [安装 Claude Code](https://code.claude.com/docs/zh-CN/quickstart)
-- [Claude Code DeepSeek 配置](https://www.runoob.com/claude-code/claude-code-deepseek.html)
-- [DeepSeek API 文档](https://api-docs.deepseek.com/zh-cn/guides/anthropic_api)
-- [接入 Claude Code](https://api-docs.deepseek.com/zh-cn/quick_start/agent_integrations/claude_code)
-- [VS Code 安装 Claude Code](https://www.runoob.com/claude-code/vscode-install-claude-code.html)
-> VSCode 勾选 Disable Login Prompt 配置来关闭登录页面
-- [DeepSeek 开发平台](https://platform.deepseek.com/sign_in)
+1️⃣ 置优先级（从高到低）
+
+| 位置                          | 作用域   | 用途         | 是否提交 Git |
+| ----------------------------- | -------- | ------------ | ------------ |
+| `.claude/settings.local.json` | 项目本地 | 个人偏好设置 | ❌ 否         |
+| `.claude/settings.json `      | 项目共享 | 团队统一配置 | ✅ 是         |
+| `~/.claude/settings.json`     | 全局     | 个人默认配置 | ❌ 否         |
+
+2️⃣ 配置合并规则
+- 高优先级的配置会覆盖低优先级的相同配置项
+- 不冲突的配置项会合并生效
+- 项目级配置优先于全局配置，个人本地配置优先于共享配置
+
+### `CLAUDE.md` - 项目记忆
+> `CLAUDE.md` 是 Claude Code 最重要的配置文件，它相当于项目的"说明书"。
+> 每次启动 Claude Code 时，它会自动读取当前目录下的 `CLAUDE.md`，了解项目背景、技术栈和规范。
+
+### `.claudeignore` - 节省 Token
+> `.claudeignore` 文件告诉 Claude Code 哪些文件不应该被读取到上下文中。合理配置可以显著减少 Token 消耗（通常能减少 40-60%），同时提高响应速度。
+
+1️⃣ 为什么需要 `.claudeignore`？
+
+Claude Code 在理解项目时，会尝试读取相关文件。但有些文件对理解项目没有帮助，反而会
+
+- 消耗大量 Token（如 `node_modules` 中的类型定义文件）
+- 引入噪音（如日志文件、构建产物）
+- 包含敏感信息（如 `.env` 文件）
+
+2️⃣ 推荐配置
+```txt
+# ===== 依赖目录 =====
+# 这些目录包含大量第三方代码，不需要 Claude 读取
+node_modules/
+.pnp/
+.pnp.js
+
+# ===== 构建产物 =====
+# 生成的文件，不包含源代码信息
+dist/
+build/
+.next/
+out/
+*.tsbuildinfo
+
+# ===== 日志文件 =====
+# 运行时生成的日志，对理解项目无帮助
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ===== 测试相关 =====
+# 测试覆盖率报告、coverage 数据
+coverage/
+.nyc_output/
+
+# ===== 编辑器/IDE =====
+# 编辑器配置和临时文件
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ===== 系统文件 =====
+# macOS、Windows 系统文件
+.DS_Store
+Thumbs.db
+
+# ===== 环境变量 =====
+# 包含敏感信息，不应被读取
+.env
+.env.local
+.env.*.local
+
+# ===== 大型资源文件 =====
+# 图片、视频等二进制文件
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+*.mp4
+*.webm
+
+# ===== 锁文件（可选） =====
+# 如果你不需要 Claude 分析依赖版本，可以忽略
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+```
+
+3️⃣ 配置技巧
+
+- **从最小配置开始**：先忽略 `node_modules` 和构建产物，观察 Token 消耗
+- **根据项目调整**：若是图片密集型项目，添加图片格式忽略；若是文档项目，保留 md 文件
+- **定期优化**：使用 `/context` 查看哪些文件消耗了最多 Token，考虑是否加入忽略列表
+
+### 权限配置
+> Claude Code 默认会在执行敏感操作前询问确认。通过 `settings.json` 中的 `permissions` 配置，你可以精细控制哪些操作可以自动执行，哪些需要确认，哪些完全禁止。
+
+1️⃣ 权限配置结构
+
+```json
+{
+  "permissions": {
+    "allow": [
+      // 自动允许，不询问
+    ],
+    "ask": [
+      // 执行前询问确认
+    ],
+    "deny": [
+      // 完全禁止
+    ]
+  }
+}
+```
+
+2️⃣ 配置语法
+
+权限规则使用 操作类型(匹配模式) 的格式
+
+| 操作类型 | 说明         | 示例                          |
+| -------- | ------------ | ----------------------------- |
+| `Bash`   | 执行终端命令 | `Bash(git status)`            |
+| `Edit`   | 编辑文件     | `Edit(src/**/*.ts)`           |
+| `Read`   | 读取文件     | `Read(README.md)`             |
+| `Write`  | 创建新文件   | `Write(src/components/*.tsx)` |
+
+3️⃣ 匹配模式支持通配符
+
+- `*` 匹配任意字符（不包括 `/`）
+- `**` 匹配任意路径
+- `?` 匹配单个字符
+
+4️⃣ 配置示例
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run lint:*)",
+      "Edit(src/**/*.{ts,tsx})",
+      "Edit(tests/**/*.test.ts)",
+      "Read(src/**/*.ts)",
+      "Write(src/components/*.tsx)"
+    ],
+    "ask": [
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git pull:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build)",
+      "Edit(package.json)",
+      "Edit(tsconfig.json)",
+      "Read(.env)",
+      "Read(config/secrets.*)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(sudo:*)",
+      "Bash(curl * | sh)",
+      "Bash(wget * | sh)",
+      "Edit(.git/*)",
+      "Write(/etc/*)",
+      "Read(/etc/passwd)"
+    ]
+  }
+}
+```
+
+5️⃣ 配置建议
+- **开发阶段**：设置较宽松的权限，提高迭代速度
+- **生产环境**：收紧权限，特别是涉及部署、敏感数据的操作
+- **团队协作**：将基础权限放在 `settings.json`（共享），个人放在 `settings.local.json`
+
+### Rules 规则目录
+> 对于大型项目，单个 `CLAUDE.md` 可能变得臃肿且难以维护。Claude Code 支持使用 `Rules` 规则目录 进行模块化管理，将不同方面的规范拆分成独立的文件。
+
+1️⃣ 目录结构
+```md
+.claude/
+├── settings.json          # 主配置文件
+├── CLAUDE.md              # 项目概述（仍需要）
+└── rules/                 # 规则目录
+    ├── 00-security.md     # 安全规则（全局）
+    ├── 01-coding-style.md # 编码风格（全局）
+    ├── 10-api.md          # API 开发规范
+    ├── 11-frontend.md     # 前端开发规范
+    ├── 12-backend.md      # 后端开发规范
+    └── 20-testing.md      # 测试规范
+```
+
+2️⃣ 文件命名建议
+```md
+使用数字前缀控制加载顺序（如 `00-`、`01-`），确保基础规则先加载，特定规则后加载。
+```
+
+3️⃣ 规则文件格式
+> 规则文件支持 `YAML frontmatter`，用于控制规则的适用范围
+
+4️⃣ 规则继承与覆盖
+- 全局规则（无 `frontmatter` 或 `globs: *`）适用于所有文件
+- 特定路径规则只适用于匹配的文件
+- 当多个规则冲突时，优先级高的规则生效
+- 特定规则可以覆盖全局规则
+
+5️⃣ 迁移建议
+若 你已经有一个庞大的 `CLAUDE.md`，可以按以下步骤迁移到 Rules 目录
+- 创建 `.claude/rules/` 目录
+- 将 `CLAUDE.md` 中的内容按主题拆分
+- 为每个规则文件添加适当的 frontmatter
+- 保留 `CLAUDE.md` 作为项目概述，移除详细规范
+- 测试确保规则正确加载
+
+## 核心操作指令
+> Claude Code 提供了一套丰富的操作指令，让你能够高效地与 AI 协作，指令分为几类
+> - Slash 命令（内置功能）
+> - 符号系统（快捷操作）
+> - 以及自然语言指令（日常开发）
+
+### Slash 命令速查
+Slash 命令是 Claude Code 的内置功能，以 `/` 开头。它们提供标准化的操作，如初始化项目、管理配置、查看状态等。
+
+| 命令           | 功能                       | 使用场景                 |
+| -------------- | -------------------------- | ------------------------ |
+| `/help`        | 显示所有命令               | 忘记命令时快速查看       |
+| `/init`        | 初始化项目，生成 CLAUDE.md | 新项目或添加配置         |
+| `/plan`        | 进入规划模式               | 复杂任务前先制定计划     |
+| `/clear`       | 清除对话历史               | 上下文混乱时重新开始     |
+| `/compact`     | 压缩上下文                 | 长对话后节省 Token       |
+| `/diff`        | 打开交互式 diff 视图       | 查看当前未提交改动       |
+| `/plugin`      | 管理插件                   | 安装提交、审查等扩展能力 |
+| `/context`     | 查看上下文使用             | 优化 Token 消耗          |
+| `/cost`        | 查看本次会话费用           | 关注使用成本             |
+| `/config`      | 打开配置面板               | 修改设置                 |
+| `/permissions` | 权限管理                   | 调整操作权限             |
+| `/model`       | 切换 AI 模型               | 选择不同模型             |
+
+### 符号系统
+符号系统是 Claude Code 的快捷操作方式，通过特殊符号快速触发特定功能。
+
+| 符号 | 名称      | 用途          | 示例           |
+| ---- | --------- | ------------- | -------------- |
+| `/`  | Slash命令 | 执行内置操作  | `/help, /plan` |
+| `@`  | At 引用   | 引用文件/目录 | `@src/app.tsx` |
+| `!`  | Bang 模式 | 执行终端命令  | `!npm test`    |
+| `&`  | 后台运行  | 后台执行任务  | `&npm run dev` |
 
 ## 通过 CC Switch 可视化配置
-- [Claude Desktop](https://ccswitch.io/zh/docs?section=providers&item=claude-desktop):
+- [Claude Desktop](https://ccswitch.io/zh/docs?section=providers&item=claude-desktop)
 > Claude Desktop 面板用于在 CC Switch 中管理 Claude Desktop 的供应商配置
 - [快速上手](https://ccswitch.io/zh/docs?section=getting-started&item=quickstart)
 > 帮助你在 5 分钟内完成首次配置。
-
 
 ## 通过 VSCode 配置
 
@@ -390,6 +638,25 @@ code ./.claude/settings.json
 }
 ```
 
-## Claude Code 切换到终端模式
+## Claude Code 终端模式
 - [Claude Code 在 VS Code 中切换到终端模式](https://code.claude.com/docs/zh-CN/vs-code#切换到终端模式)
 - [VS Code 命令和快捷键](https://code.claude.com/docs/zh-CN/vs-code#vs-code-命令和快捷键)
+
+## Claude Code 搭配
+
+- [Claude Code 开源地址](https://github.com/anthropics/claude-code)
+- [Claude Code 官方文档](https://code.claude.com/docs/zh-CN/overview)
+- [DeepSeek Anthropic API](https://api-docs.deepseek.com/zh-cn/guides/anthropic_api)
+- [智谱大模型接入 Claude Code](ttps://docs.bigmodel.cn/cn/coding-plan/tool/claude#claude-code)
+
+## Claude Code 参考资料
+
+- [easy-vibe AI 入门到高级](https://datawhalechina.github.io/easy-vibe/zh-cn/)
+- [Claude Code 教程](https://www.runoob.com/claude-code/claude-code-tutorial.html)
+- [安装 Claude Code](https://code.claude.com/docs/zh-CN/quickstart)
+- [Claude Code DeepSeek 配置](https://www.runoob.com/claude-code/claude-code-deepseek.html)
+- [DeepSeek API 文档](https://api-docs.deepseek.com/zh-cn/guides/anthropic_api)
+- [接入 Claude Code](https://api-docs.deepseek.com/zh-cn/quick_start/agent_integrations/claude_code)
+- [VS Code 安装 Claude Code](https://www.runoob.com/claude-code/vscode-install-claude-code.html)
+- [DeepSeek 开发平台](https://platform.deepseek.com/sign_in)
+
