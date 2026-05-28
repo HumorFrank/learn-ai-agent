@@ -15,9 +15,11 @@ tags: ['AI', 'Claude Code', 'Claude Code 参考资料']
         <div class="sg-item-label">学习目标</div>
       </div>
       <div class="sg-tags">
-        <span class="sg-tag">Claude Code 配置</span>
+        <span class="sg-tag">安装与启动</span>
+        <span class="sg-tag">10 个核心技巧</span>
+        <span class="sg-tag">配置体系</span>
         <span class="sg-tag">DeepSeek 接入</span>
-        <span class="sg-tag">三级配置体系</span>
+        <span class="sg-tag">权限与规则</span>
       </div>
     </div>
     <div class="sg-item">
@@ -26,7 +28,7 @@ tags: ['AI', 'Claude Code', 'Claude Code 参考资料']
         <div class="sg-item-label">预计阅读</div>
       </div>
       <div class="sg-time">
-        <span class="sg-time-num">10</span>
+        <span class="sg-time-num">15</span>
         <span class="sg-time-unit">min</span>
       </div>
     </div>
@@ -36,9 +38,11 @@ tags: ['AI', 'Claude Code', 'Claude Code 参考资料']
         <div class="sg-item-label">你将收获</div>
       </div>
       <ul class="sg-list">
-        <li>配置 Claude Code</li>
-        <li>接入 DeepSeek API</li>
-        <li>理解三级配置体系</li>
+        <li>掌握 Claude Code 多种安装方式</li>
+        <li>熟练使用 10 个核心操作技巧</li>
+        <li>理解三级配置体系与优先级</li>
+        <li>配置 DeepSeek 多供应商接入</li>
+        <li>学会权限管理与项目规则定制</li>
       </ul>
     </div>
   </div>
