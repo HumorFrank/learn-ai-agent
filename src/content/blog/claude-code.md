@@ -1,6 +1,6 @@
 ---
 title: 'Claude Code 快速上手指南'
-date: 2026-05-22
+date: 2026-05-27
 description: 'Claude Code 是 Anthropic 官方出品的 AI 原生编码工具，它将大型语言模型的能力直接集成到终端中，让你可以用自然语言与 AI 协作完成编程任务。不同于传统的代码补全工具，Claude Code 能够理解整个项目的上下文，执行复杂的开发任务，从代码生成到重构、从调试到文档编写，它都能胜任。'
 tags: ['AI', 'Claude Code', 'Claude Code 参考资料']
 ---
