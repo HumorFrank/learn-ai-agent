@@ -103,7 +103,8 @@ claude
 
 ## 核心技巧
 
-技巧 1：**双击 Esc 回退对话 —— 撤销误操作**
+### 1. 双击 Esc 回退对话
+
 > 在与 AI 协作时，你可能会说错话、给错指令，或者对 AI 的回答不满意。双击 Esc 能让你快速"时光倒流"。
 
 快捷键详解
@@ -116,7 +117,7 @@ claude
 # 注意：可以为正在会话中的 Claude Code 补充一些边界、一些会话中未给的说明等。
 ```
 
-技巧 2：**@ 引用文件 —— 精准指定上下文**
+### 2. @ 引用文件
 > Claude Code 虽然能自动读取项目文件，但显式地引用文件能让 AI 更准确地理解你的意图，也能避免 AI 读取不相关的文件浪费 Token。
 
 高级用法
@@ -131,7 +132,7 @@ claude
 @src/utils.ts:45-60 解释这段代码的作用
 ```
 
-技巧 3：**/plan 先规划后编码 —— 复杂任务的正确打开方式**
+### 3. /plan 先规划后编码
 > 对于复杂的开发任务，直接开始编码往往效率低下。`/plan` 命令让 Claude 进入规划模式，先制定详细的实施计划，再一步步执行。
 
 1️⃣ Prompt 提示词
@@ -151,7 +152,7 @@ claude
 > - 计划制定后，可以逐阶段执行，每完成一个阶段检查一次
 > - 如果需求变更，可以重新运行 `/plan` 调整计划
 
-技巧 4：**/init 自动生成配置 —— 快速初始化项目**
+### 4. /init 自动生成配置
 > `/init` 是 Claude Code 最强大的命令之一。它能自动扫描你的项目，理解技术栈和结构，然后生成一份完整的 `CLAUDE.md` 配置文件。
 
 ```sh
@@ -164,7 +165,7 @@ Claude 会执行以下步骤
   - **生成 CLAUDE.md**：创建包含项目信息的配置文件
 > `建议`：新项目初始化后，立即运行 `/init`，然后根据实际情况调整生成的配置。
 
-技巧 5：**/compact 压缩上下文 —— 节省 Token**
+### 5. /compact 压缩上下文
 > Claude Code 的上下文窗口是有限的（通常 200K Token）。长对话会消耗大量 Token，不仅增加成本，还可能导致重要的早期信息被挤出上下文窗口。
 
 ```sh
@@ -174,7 +175,7 @@ Claude 会执行以下步骤
 1️⃣ 工作原理
 > `/compact` 会分析当前对话历史，提取关键信息（如已做出的决策、已生成的代码、已确认的需求），然后生成一份简洁的摘要。之后的对话基于这份摘要，而不是完整的历史记录。
 
-技巧 6：**用 Claude Code 辅助 Git 提交**
+### 6. 辅助 Git 提交
 > 在 Claude Code 里，推荐的提交流程是：先让 Claude 帮你查看 diff、整理提交信息，再由你执行标准的 Git 命令完成提交。这样既清晰，也方便你在提交前再次确认改动内容。
 
 1️⃣ 推荐工作流
@@ -193,7 +194,7 @@ Claude 会执行以下步骤
 !git commit -m "feat(docs): update Claude Code workflow guidance"
 ```
 
-技巧 7：**Shift+Tab 自动接受 —— 提高流畅度**
+### 7. Shift+Tab 自动接受
 > 默认情况下，Claude 修改代码前会询问你的确认。这在学习阶段很有帮助，但熟悉后可能会觉得繁琐。`Shift+Tab` 开启`自动接受模式`，让工作流更流畅。
 
 1️⃣ 使用方式
@@ -212,7 +213,7 @@ Claude 会执行以下步骤
 - 建议配合 Git 使用，这样即使出问题也能回滚
 - 对于敏感操作（如删除文件、修改配置），Claude 仍会询问
 
-技巧 8：**Ctrl+C 取消操作 —— 紧急制动**
+### 8. Ctrl+C 取消操作
 > 当 Claude 正在执行一个长时间运行的任务，或者你意识到给错了指令时，`Ctrl+C` 是你的"紧急制动"按钮。
 
 1️⃣ 使用方式
@@ -232,15 +233,14 @@ Claude 会执行以下步骤
 - `Ctrl+C`：停止正在进行的操作（如运行命令、生成代码）
 - `双击 Esc`：回退对话状态（撤销上一轮对话）
 
-
-技巧 9：**/context 查看上下文使用 —— 优化 Token 消耗**
+### 9. /context 查看上下文
 > `/context` 显示当前会话的上下文使用情况，帮助你了解 Token 消耗，优化使用成本。
 
 ```sh
 /context
 ```
 
-技巧 10：**/resume 恢复会话 —— 切换多任务对话**
+### 10. /resume 恢复会话
 > 当你在处理多个任务时，可能会开启多段对话。`/resume` 能让你在当前聊天中快速切换回之前的会话，而不需要退出重新启动。
 
 ```sh
@@ -269,47 +269,17 @@ Claude 会执行以下步骤
 - [DeepSeek 开发平台](https://platform.deepseek.com/sign_in)
 
 ## 通过 CC Switch 可视化配置
-- [Claude Desktop](https://ccswitch.io/zh/docs?section=providers&item=claude-desktop): Claude Desktop 面板用于在 CC Switch 中管理 Claude Desktop 的供应商配置
-- [快速上手](https://ccswitch.io/zh/docs?section=getting-started&item=quickstart): 帮助你在 5 分钟内完成首次配置。
+- [Claude Desktop](https://ccswitch.io/zh/docs?section=providers&item=claude-desktop):
+> Claude Desktop 面板用于在 CC Switch 中管理 Claude Desktop 的供应商配置
+- [快速上手](https://ccswitch.io/zh/docs?section=getting-started&item=quickstart)
+> 帮助你在 5 分钟内完成首次配置。
 
-## 通过 Terminal 终端配置
 
-### 用户级配置
+## 通过 VSCode 配置
 
-1️⃣ 进入个人配置目录
+1️⃣ 进入配置（将环境变量配置到插件的 `settings.json`）
 
-```txt
-C:\Users\你的用户名\.claude\settings.json
-```
-
-```sh
-~/.claude/settings.json #用户级配置（全局）
-```
-
-2️⃣ `C:\Users\你的用户名\.claude\settings.json` 中配置
-
-```json
-{
-  "theme": "dark",
-  "model": "deepseek-v4-pro",
-  "hasCompletedOnboarding": true,
-  "env": {
-    "ANTHROPIC_BASE_URL": "https://api.deepseek.com/anthropic",
-    "ANTHROPIC_AUTH_TOKEN": "sk-你的DeepSeek API Key",
-    "ANTHROPIC_MODEL": "deepseek-v4-pro",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v4-pro",
-    "DISABLE_NON_ESSENTIAL_MODEL_CALLS": "1",
-    "DISABLE_TELEMETRY": "1"
-  },
-  "effortLevel": "high"
-}
-```
-
-### vscode 级别配置
-
-1️⃣ 进入配置（将环境变量配置到插件的 settings.json）
-
-```
+``` sh
 打开设置 
 -> ClaudeCode 
 -> 在 Claude Code 扩展设置页面，点击右上角的 "打开设置(JSON)" 图标 
@@ -357,16 +327,49 @@ C:\Users\你的用户名\.claude\settings.json
 }
 ```
 
+## 通过 Terminal 终端配置
+
+### 用户级配置
+
+1️⃣ 进入个人配置目录
+
+```sh
+# 进入个人配置目录
+C:\Users\你的用户名\.claude\settings.json
+
+# 用户级配置（全局）
+~/.claude/settings.json 
+```
+
+2️⃣ `C:\Users\你的用户名\.claude\settings.json` 中配置
+
+```json
+{
+  "theme": "dark",
+  "model": "deepseek-v4-pro",
+  "hasCompletedOnboarding": true,
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://api.deepseek.com/anthropic",
+    "ANTHROPIC_AUTH_TOKEN": "sk-你的DeepSeek API Key",
+    "ANTHROPIC_MODEL": "deepseek-v4-pro",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v4-pro",
+    "DISABLE_NON_ESSENTIAL_MODEL_CALLS": "1",
+    "DISABLE_TELEMETRY": "1"
+  },
+  "effortLevel": "high"
+}
+```
+
 ### 项目级配置
 
 1️⃣ 进入配置
 
-```txt
-<你的项目文件夹>/.claude/settings.json
-```
-
 ```sh
-code ./.claude/settings.json # 打开 claude 配置文件进行配置
+# 进入项目根目录
+project/.claude/settings.json
+
+# 打开 claude 配置文件进行配置
+code ./.claude/settings.json 
 ```
 
 2️⃣ 配置json
