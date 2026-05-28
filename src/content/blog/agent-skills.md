@@ -70,7 +70,7 @@ Agent Skills 的关键是渐进式披露，分三层加载
 
 ## Skills 的两种类型
 
-|   特征       | 全局 Skills（个人） | 项目 Skills（团队）       |
+| 特征     | 全局 Skills（个人） | 项目 Skills（团队）       |
 | -------- | ------------------- | ------------------------- |
 | 存放位置 | `~/.claude/skills/` | `project/.claude/skills/` |
 | 作用范围 | 所有项目            | 当前项目                  |
@@ -240,8 +240,8 @@ Describe the scenarios where this skill should be used.
 
 | 资源说明                          | 链接                                                                                                                  |
 | --------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| 开放代理技能生态系统    | [skills.sh](https://www.skills.sh/)                                                                                   |
-| 专为中国用户优化的 AI Skills 社区    | [skillhub.cn](https://skillhub.cn/)                                                                                   |
+| 开放代理技能生态系统              | [skills.sh](https://www.skills.sh/)                                                                                   |
+| 专为中国用户优化的 AI Skills 社区 | [skillhub.cn](https://skillhub.cn/)                                                                                   |
 | Skills 教程                       | [Skills 教程](https://www.runoob.com/ai-agent/skills-agent.html)                                                      |
 | skill-creator                     | [skill-creator](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md)                         |
 | 自动生成 Skill 的 Skill           | [自动生成 Skill 的 Skill](https://github.com/anthropics/skills/tree/main/skills/skill-creator)                        |
