@@ -1,13 +1,26 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 
+interface Heading {
+  text: string;
+  slug: string;
+  depth: number;
+}
+
 export interface Props {
   title: string;
   date: Date;
   tags?: string[];
+  headings?: Heading[];
 }
 
-const { title, date, tags = [] } = Astro.props;
+const {
+  title,
+  date,
+  tags = [],
+  headings = [],
+} = Astro.props;
+
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const formattedDate = date.toLocaleDateString('zh-CN', {
@@ -15,52 +28,151 @@ const formattedDate = date.toLocaleDateString('zh-CN', {
   month: 'long',
   day: 'numeric',
 });
+
+const showToc = headings.length >= 2;
 ---
 
 <BaseLayout pageTitle={title}>
-  <article class="post animate-in">
-    <!-- Post header -->
-    <header class="post-header">
-      <a href={`${base}/blog`} class="back-link">&larr; 返回文章列表</a>
+  <div class="article-container">
+    <!-- Main content -->
+    <article class="post animate-in">
+      <header class="post-header">
+        <a href={`${base}/blog`} class="back-link">&larr; 文章列表</a>
+        <h1 class="post-title">{title}</h1>
 
-      <h1 class="post-title">{title}</h1>
+        <div class="post-meta">
+          <time datetime={date.toISOString()}>{formattedDate}</time>
+          {tags.length > 0 && (
+            <div class="post-tags">
+              {tags.map((tag) => (
+                <a href={`${base}/tags/${tag}`} class="tag-pill">#{tag}</a>
+              ))}
+            </div>
+          )}
+        </div>
+      </header>
 
-      <div class="post-meta">
-        <time datetime={date.toISOString()}>{formattedDate}</time>
-        {tags.length > 0 && (
-          <div class="post-tags">
-            {tags.map((tag) => (
-              <a href={`${base}/tags/${tag}`} class="tag-pill">#{tag}</a>
-            ))}
-          </div>
-        )}
+      <div class="post-body">
+        <slot />
       </div>
 
-      <div class="post-divider"></div>
-    </header>
+      <footer class="post-footer">
+        <nav class="post-footer-nav">
+          <a href={`${base}/blog`} class="back-link">&larr; 文章列表</a>
+        </nav>
+      </footer>
+    </article>
 
-    <!-- Post content -->
-    <div class="post-body">
-      <slot />
-    </div>
-
-    <!-- Post footer -->
-    <footer class="post-footer">
-      <div class="post-divider"></div>
-      <a href={`${base}/blog`} class="back-link">&larr; 返回文章列表</a>
-    </footer>
-  </article>
+    <!-- Right sidebar: on-page TOC -->
+    {showToc && (
+      <aside class="right-sidebar">
+        <nav class="toc">
+          <span class="toc-label">目录</span>
+          <ul class="toc-list">
+            {headings.map((h) => (
+              <li class:list={['toc-item', { sub: h.depth === 3 }]}>
+                <a href={`#${h.slug}`} class="toc-link">{h.text}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+    )}
+  </div>
 </BaseLayout>
 
-<style>
-  .post {
-    max-width: var(--max-width);
-    margin: 3rem auto;
+<script>
+  function initToc() {
+    const tocList = document.querySelector('.toc-list');
+    if (!tocList) return;
+
+    const links = [...tocList.querySelectorAll('.toc-link')] as HTMLAnchorElement[];
+    if (links.length === 0) return;
+
+    const slugs = links.map((l) => l.getAttribute('href')!.replace('#', ''));
+
+    const postHeadings = document.querySelectorAll('.post-body h2, .post-body h3');
+    postHeadings.forEach((h) => {
+      const raw = h.textContent?.replace(/[`*_~\[\]()]/g, '').trim() || '';
+      const slug = raw
+        .toLowerCase()
+        .replace(/[^\w一-鿿\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+      if (slugs.includes(slug) && !h.id) {
+        h.id = slug;
+      }
+    });
+
+    const NAV_OFFSET = 90;
+    let ticking = false;
+
+    function updateActive() {
+      let activeIndex = -1;
+      const headingEls = slugs
+        .map((s) => document.getElementById(s))
+        .filter(Boolean) as HTMLElement[];
+
+      for (let i = headingEls.length - 1; i >= 0; i--) {
+        if (headingEls[i].getBoundingClientRect().top < NAV_OFFSET) {
+          activeIndex = i;
+          break;
+        }
+      }
+
+      links.forEach((link, i) => {
+        link.classList.toggle('active', i === activeIndex);
+      });
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateActive();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    tocList.addEventListener('click', (e) => {
+      const link = (e.target as HTMLElement).closest('.toc-link');
+      if (!link) return;
+      e.preventDefault();
+      const id = (link as HTMLAnchorElement).getAttribute('href')!.replace('#', '');
+      const target = document.getElementById(id);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+        links.forEach((l) => l.classList.remove('active'));
+        (link as HTMLElement).classList.add('active');
+        history.replaceState(null, '', `#${id}`);
+      }
+    });
+
+    updateActive();
   }
 
-  /* ── Header ── */
+  initToc();
+</script>
+
+<style>
+  /* ── Two-Column Layout ── */
+  .article-container {
+    display: grid;
+    grid-template-columns: minmax(0, 680px) 200px;
+    gap: 3rem;
+    justify-content: center;
+    margin: 4rem 0;
+  }
+
+  .post {
+    min-width: 0;
+  }
+
+  /* ── Post Header ── */
   .post-header {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
   }
 
   .back-link {
@@ -68,30 +180,26 @@ const formattedDate = date.toLocaleDateString('zh-CN', {
     align-items: center;
     gap: 0.3rem;
     font-family: var(--font-display);
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 500;
-    color: var(--color-text-muted);
+    color: var(--color-text-dim);
     background: none;
-    padding: 0.35rem 0.75rem;
-    border-radius: var(--radius-sm);
-    transition: all 0.2s var(--ease-smooth);
+    padding: 0;
+    transition: color 0.2s ease;
   }
 
   .back-link:hover {
-    color: var(--color-accent);
-    background: var(--color-accent-soft);
+    color: var(--color-text);
+    background: none;
   }
 
   .post-title {
     font-size: 2.5rem;
     font-weight: 700;
-    margin: 1.5rem 0 1rem;
-    letter-spacing: -0.035em;
-    line-height: 1.2;
-    background: linear-gradient(135deg, var(--color-text) 60%, var(--color-accent));
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    margin: 2rem 0 1.25rem;
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+    color: var(--color-text);
   }
 
   .post-meta {
@@ -102,63 +210,60 @@ const formattedDate = date.toLocaleDateString('zh-CN', {
   }
 
   .post-meta time {
-    color: var(--color-text-muted);
-    font-size: 0.88rem;
+    color: var(--color-text-dim);
+    font-size: 0.85rem;
     font-variant-numeric: tabular-nums;
   }
 
   .post-tags {
     display: flex;
-    gap: 0.35rem;
+    gap: 0.4rem;
     flex-wrap: wrap;
   }
 
   .tag-pill {
     display: inline-block;
-    padding: 0.2rem 0.65rem;
-    background: var(--color-accent-soft);
-    color: var(--color-accent);
-    border-radius: 100px;
+    padding: 0.15rem 0.55rem;
+    background: none;
+    color: var(--color-text-dim);
+    border-radius: 4px;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 500;
     font-family: var(--font-display);
-    transition: all 0.2s;
-    border: 1px solid transparent;
+    transition: color 0.2s ease;
+    border: none;
   }
 
   .tag-pill:hover {
-    border-color: var(--color-border-accent);
-    background: var(--glow-tag-hover);
-    color: var(--color-accent-glow);
+    color: var(--color-text);
+    background: none;
   }
 
-  .post-divider {
-    height: 1px;
-    background: linear-gradient(to right, var(--color-border-accent), transparent);
-    margin: 1.5rem 0;
-  }
-
-  /* ── Body ── */
+  /* ── Post Body ── */
   .post-body {
     line-height: 1.85;
     font-size: 1rem;
+    color: var(--color-text);
   }
 
   .post-body :global(h1) {
     font-size: 2rem;
-    margin: 2.5rem 0 1rem;
+    font-weight: 700;
+    margin: 3rem 0 1rem;
+    letter-spacing: -0.03em;
   }
 
   .post-body :global(h2) {
-    font-size: 1.5rem;
-    margin: 2rem 0 0.75rem;
-    padding-bottom: 0.4rem;
-    border-bottom: 1px solid var(--color-border);
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 2.75rem 0 0.75rem;
+    letter-spacing: -0.02em;
   }
 
   .post-body :global(h3) {
-    font-size: 1.2rem;
-    margin: 1.5rem 0 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 1.75rem 0 0.5rem;
   }
 
   .post-body :global(p) {
@@ -183,42 +288,100 @@ const formattedDate = date.toLocaleDateString('zh-CN', {
   }
 
   .post-body :global(li)::marker {
-    color: var(--color-accent);
+    color: var(--color-text-dim);
   }
 
   .post-body :global(img) {
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-md);
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
   }
 
   .post-body :global(a) {
     color: var(--color-accent);
-    text-decoration-line: underline;
-    text-decoration-style: dotted;
-    text-underline-offset: 3px;
-    text-decoration-color: var(--color-border-accent);
-    transition: all 0.2s;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+    transition: color 0.2s ease;
   }
 
   .post-body :global(a):hover {
-    text-decoration-style: solid;
-    text-decoration-color: var(--color-accent);
+    color: var(--color-accent-glow);
   }
 
-  /* ── Footer ── */
+  /* ── Post Footer ── */
   .post-footer {
-    margin-top: 3rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
   }
 
-  .post-footer .post-divider {
-    background: linear-gradient(to right, transparent, var(--color-border-strong), transparent);
+  /* ── Right Sidebar TOC ── */
+  .right-sidebar {
+    position: sticky;
+    top: calc(var(--nav-height) + 3rem);
+    align-self: start;
+    max-height: calc(100vh - var(--nav-height) - 6rem);
+    overflow-y: auto;
+  }
+
+  .toc {
+    padding: 0;
+  }
+
+  .toc-label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--color-text-dim);
     margin-bottom: 1rem;
   }
 
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .toc-item {
+    margin: 0;
+  }
+
+  .toc-link {
+    display: block;
+    padding: 0.28rem 0;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: var(--color-text-dim);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .toc-link:hover {
+    color: var(--color-text);
+  }
+
+  .toc-link.active {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .toc-item.sub .toc-link {
+    padding-left: 0.85rem;
+    font-size: 0.77rem;
+  }
+
   /* ── Responsive ── */
-  @media (max-width: 768px) {
-    .post {
-      margin: 2rem auto;
+  @media (max-width: 1024px) {
+    .article-container {
+      grid-template-columns: minmax(0, 1fr);
+      margin: 2.5rem 0;
+    }
+
+    .right-sidebar {
+      display: none;
     }
 
     .post-title {

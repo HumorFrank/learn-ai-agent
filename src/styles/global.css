@@ -154,6 +154,7 @@ body::before {
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-height) + 1.5rem);
 }
 
 body {
