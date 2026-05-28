@@ -70,17 +70,11 @@ Agent Skills 的关键是渐进式披露，分三层加载
 
 ## Skills 的两种类型
 
-1️⃣ 全局 Skills（个人）
-
-- 存放位置：`~/.claude/skills/`
-- 作用范围：所有项目
-- 适用场景：个人通用技能
-
-2️⃣ 项目 Skills（团队）
-
-- 存放位置：`项目目录/.claude/skills/`
-- 作用范围：当前项目
-- 适用场景：团队共享、项目特定规范
+|   特征       | 全局 Skills（个人） | 项目 Skills（团队）       |
+| -------- | ------------------- | ------------------------- |
+| 存放位置 | `~/.claude/skills/` | `project/.claude/skills/` |
+| 作用范围 | 所有项目            | 当前项目                  |
+| 适用场景 | 个人通用技能        | 团队共享、项目特定规范    |
 
 ## Skills vs 提示词
 
@@ -92,6 +86,7 @@ Agent Skills 的关键是渐进式披露，分三层加载
 | 难以版本控制               | 可以用 Git 管理        |
 
 ## Skills vs MCP
+
 - `MCP` 是给这个工作人员配备的"工具"（扳手、电脑、访问权限）
 - `Skills` 是给这个工作人员的"操作手册"（怎么做代码审查、怎么提交代码）
 
@@ -118,7 +113,7 @@ Agent Skills 的关键是渐进式披露，分三层加载
 ### 基本结构
 
 ```md
-.claude/skills/custom-skill/ 
+.claude/skills/custom-skill/
 ├── SKILL.md # 必需：技能定义文件
 ├── scripts/ # 可选：辅助脚本
 ├── templates/ # 可选：输出模板
@@ -187,7 +182,9 @@ tags: # 标签
 - 编写技能内容
 
 3️⃣ **使用 skill-creator**
+
 > skill-creator 是一个专门用来创建 Skills 的工具，会引导你一步步完成。
+
 - 引导你明确技能用途
 - 生成 `SKILL.md` 草稿
 - 创建测试用例
@@ -243,7 +240,8 @@ Describe the scenarios where this skill should be used.
 
 | 资源说明                          | 链接                                                                                                                  |
 | --------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| skills.sh 开放代理技能生态系统    | [skills.sh](https://www.skills.sh/)                                                                                   |
+| 开放代理技能生态系统    | [skills.sh](https://www.skills.sh/)                                                                                   |
+| 专为中国用户优化的 AI Skills 社区    | [skillhub.cn](https://skillhub.cn/)                                                                                   |
 | Skills 教程                       | [Skills 教程](https://www.runoob.com/ai-agent/skills-agent.html)                                                      |
 | skill-creator                     | [skill-creator](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md)                         |
 | 自动生成 Skill 的 Skill           | [自动生成 Skill 的 Skill](https://github.com/anthropics/skills/tree/main/skills/skill-creator)                        |
