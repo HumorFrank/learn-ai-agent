@@ -13,6 +13,10 @@ node_modules/
 .vscode/
 .idea/
 
+# Claude Code 本地/敏感配置
+.claude/settings.local.json
+.mcp.json
+
 # 系统文件
 .DS_Store
 Thumbs.db
