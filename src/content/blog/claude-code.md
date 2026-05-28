@@ -1,7 +1,7 @@
 ---
-title: 'Claude Code'
+title: 'Claude Code 快速上手指南'
 date: 2026-05-22
-description: 'Claude Code 是 Agent（智能体工具），不是 Chat（聊天工具）'
+description: 'Claude Code 是 Anthropic 官方出品的 AI 原生编码工具，它将大型语言模型的能力直接集成到终端中，让你可以用自然语言与 AI 协作完成编程任务。不同于传统的代码补全工具，Claude Code 能够理解整个项目的上下文，执行复杂的开发任务，从代码生成到重构、从调试到文档编写，它都能胜任。'
 tags: ['AI', 'Claude Code', 'Claude Code 参考资料']
 ---
 
@@ -43,6 +43,76 @@ tags: ['AI', 'Claude Code', 'Claude Code 参考资料']
     </div>
   </div>
 </div>
+
+## 快速安装
+
+1️⃣ npm 安装
+
+```sh
+# 全局安装 Claude Code CLI
+# 使用 -g 参数将命令安装到全局，这样在任何目录都能使用
+npm install -g @anthropic-ai/claude-code
+
+# 验证安装是否成功
+# 如果显示版本号（如 0.1.25），说明安装成功
+claude --version
+```
+
+2️⃣ Windows PowerShell
+
+```sh
+# 原生安装会在后台自动更新，以确保您始终使用最新版本。
+irm https://claude.ai/install.ps1 | iex
+```
+
+3️⃣ macOS, Linux
+
+```sh
+# 原生安装会在后台自动更新，以确保您始终使用最新版本。
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+4️⃣ 让 AI Agent 帮你安装
+> 若你已经在使用其他 AI 编程助手（如 Cursor/Copilot/Windsurf/...），可以让它们帮你完成安装。
+
+```sh
+# 方式一 
+帮我装 anthropic 的 claude code
+
+# 方式二
+安装 claude code cli，并检查 Node.js 版本是否兼容
+
+# 方式二，AI Agent 会
+  # 1.检查当前 Node.js 版本
+  # 2.如果不符合要求，提示你升级
+  # 3.执行安装命令
+  # 4.验证安装结果
+  # 5.如有问题，自动尝试修复
+```
+
+## 启动 Claude Code
+首次启动与初始化：安装完成后，进入你的项目目录启动 Claude Code
+
+```sh
+# 进入项目目录（Claude Code 会在当前目录下工作）
+cd /path/to/your/project
+
+# 启动 Claude Code
+claude
+```
+
+## 核心使用技巧
+
+- 技巧 1：双击 Esc 回退对话 —— 撤销误操作
+> 在与 AI 协作时，你可能会说错话、给错指令，或者对 AI 的回答不满意。双击 Esc 能让你快速"时光倒流"。
+
+快捷键详解
+
+```txt
+按一次 Esc     → 清除当前正在输入的内容（类似 Ctrl+C）
+按两次 Esc     → 回退到上一次对话状态（撤销上一轮对话）
+按三次 Esc     → 清除所有对话历史（重新开始）
+```
 
 ## Claude Code 搭配
 
