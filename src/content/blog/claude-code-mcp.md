@@ -15,9 +15,10 @@ tags: ["Claude Code MCP", "MCP"]
         <div class="sg-item-label">学习目标</div>
       </div>
       <div class="sg-tags">
-        <span class="sg-tag">快速开始MCP</span>
-        <span class="sg-tag">MCP 配置</span>
-        <span class="sg-tag">MCP服务器资源</span>
+        <span class="sg-tag">理解 MCP 概念</span>
+        <span class="sg-tag">快速配置 MCP</span>
+        <span class="sg-tag">配置方式详解</span>
+        <span class="sg-tag">MCP 资源导航</span>
       </div>
     </div>
     <div class="sg-item">
@@ -36,10 +37,11 @@ tags: ["Claude Code MCP", "MCP"]
         <div class="sg-item-label">你将收获</div>
       </div>
       <ul class="sg-list">
-        <li>了解为什么使用 MCP</li>
-        <li>理解 MCP是什么</li>
-        <li>了解MCP 的核心组件</li>
-        <li>MCP 服务器资源</li>
+        <li>理解 MCP 是什么及为什么需要它</li>
+        <li>掌握 MCP 的三个核心组件</li>
+        <li>学会快速配置和使用 MCP 服务器</li>
+        <li>区分用户级与项目级配置及传输方式</li>
+        <li>获取丰富的 MCP 服务器资源列表</li>
       </ul>
     </div>
   </div>
