@@ -185,7 +185,7 @@ Claude：当前已配置的 MCP 服务器
 ## MCP 服务器资源
 - [Awesome MCP Servers](https://github.com/punkpeye/awesome-mcp-servers): 最全面的 MCP 服务器列表
 - [LobeHub MCP](https://lobehub.com/zh/mcp): 中文 MCP 目录
-- [smithery.ai](https://smithery.ai/): MCP 服务器市场。
-- [awesome-mcp-servers](https://glama.ai/mcp/servers): 精选的优秀模型上下文协议 (MCP) 服务器列表。
-- [modelcontextprotocol](https://modelcontextprotocol.io/docs/getting-started/intro): 如果您正在查找 MCP 服务器列表，可以浏览 MCP 注册表上已发布的服务器。
+- [smithery.ai](https://smithery.ai/): MCP 服务器市场
+- [awesome-mcp-servers](https://glama.ai/mcp/servers): 精选的优秀模型上下文协议 (MCP) 服务器列表
+- [modelcontextprotocol](https://modelcontextprotocol.io/docs/getting-started/intro): 若要查找 MCP 服务器列表，可浏览 MCP 注册表上已发布的服务器
 - [官方 MCP 注册](https://registry.modelcontextprotocol.io/)
