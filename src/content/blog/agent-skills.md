@@ -108,6 +108,12 @@ Agent Skills 的关键是渐进式披露，分三层加载
 - 将技能内容加入"知识库"
 - 根据 `description` 自动匹配触发
 
+## 调试 Skill
+- 使用 `/skills` 回车，查看技能是否被识别
+- 直接输入技能名称手动触发
+- 检查 `SKILL.md` 文件内容是否正确
+- 查看 Claude Code 日志
+
 ## SKILL.md 文件结构
 
 ### 基本结构
@@ -190,7 +196,7 @@ tags: # 标签
 - 创建测试用例
 - 运行评估并优化
 
-## 培养技能
+## 培养 SKill 
 
 > 技能目录包含一个 `SKILL.md` 文件，该文件带有 `YAML` 前置元数据
 
@@ -237,12 +243,32 @@ Describe the scenarios where this skill should be used.
 
 ```
 
+## 进阶 Skill
+
+### Skills 与 Hooks 配合
+> Hooks 可以在特定事件时自动执行操作，结合 Skills 可以实现更强大的自动化。
+
+### Skills 与 Commands 配合
+> Commands 是简单的快捷命令，Skills 是复杂的工作流。两者可以配合使用。
+
+### 团队协作
+1️⃣ 共享项目 Skills
+- 将 Skills 放在 `.claude/skills/` 目录
+- 提交到 Git 仓库
+- 团队成员克隆项目后即可使用
+
+2️⃣ 版本控制
+- Skills 可以像代码一样进行版本控制
+- 每个 commit 都可以记录 Skills 的变更
+- 可以回滚到旧版本
+
 ## Skills 相关资源整理
 
 | 资源说明                          | 链接                                                                                                                  |
 | --------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
 | 开放代理技能生态系统              | [skills.sh](https://www.skills.sh/)                                                                                   |
 | 专为中国用户优化的 AI Skills 社区 | [skillhub.cn](https://skillhub.cn/)                                                                                   |
+| 发现并探索由社区构建的 Agent Skills | [skillsmp.com](https://skillsmp.com/zh)                                                                                   |
 | Skills 教程                       | [Skills 教程](https://www.runoob.com/ai-agent/skills-agent.html)                                                      |
 | skill-creator                     | [skill-creator](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md)                         |
 | 自动生成 Skill 的 Skill           | [自动生成 Skill 的 Skill](https://github.com/anthropics/skills/tree/main/skills/skill-creator)                        |
