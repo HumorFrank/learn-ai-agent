@@ -98,7 +98,6 @@ draft: false   # true 时仅开发环境可见
 
 - **部署分支**：`main`（仅 main 分支推送时触发）
 - **包管理**：pnpm（通过 Corepack 管理）
-- **部署地址**：https://humorfrank.github.io/learn-ai-agent/
 
 ### base 路径说明
 
